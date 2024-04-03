@@ -27,6 +27,18 @@ class EditorSeeder extends Seeder
             );
             $editorRole = Role::updateOrCreate(['name' => 'Editor']);
 
+            $editor = User::updateOrCreate(
+                [
+                    'email' => 'secondeditor@example.com',
+                ],
+                [
+                    'first_name' => 'Second',
+                    'last_name' => 'Editor',
+                    'password' => bcrypt('password'),
+                ]
+            );
+            $editorRole = Role::updateOrCreate(['name' => 'Editor']);
+
             $editor->assignRole('Editor');
             $editorRole->syncPermissions(['create posts',
                 'update posts',
