@@ -19,7 +19,9 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'body' => $this->body,
             'views' => $this->views,
-            'fullname' => ($this->user->first_name . ' ' . $this->user->last_name),
+            'full_name' => ($this->user->first_name . ' ' . $this->user->last_name),
+            'publish_date' => $this->publish_date,
+            'comment' => CommentResource::collection($this->comments),
         ];
     }
 }

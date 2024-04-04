@@ -6,6 +6,7 @@ use App\Http\Requests\PostRequests\PostStoreRequest;
 use App\Http\Requests\PostRequests\PostUpdateRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -22,6 +23,7 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
         $validatedData = $request->validated();
+        $validatedData['publish_date'] = Carbon::now()->toDateString();
         auth()->user()->posts()->create($validatedData);
         return response()->json(['message'=>'post created successfully']);
     }
