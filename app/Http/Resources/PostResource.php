@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class PostResource extends JsonResource
 {
@@ -21,7 +22,7 @@ class PostResource extends JsonResource
             'views' => $this->views,
             'full_name' => ($this->user->first_name . ' ' . $this->user->last_name),
             'user_id' => $this->user_id,
-            'publish_date' => $this->publish_date,
+            'publish_date' => Carbon::parse($this->publish_date)->toDateString(),
             'comments' => CommentResource::collection($this->comments),
         ];
     }
