@@ -28,8 +28,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user',[UserController::class,'userInformation']);
 
     Route::post('/posts',[PostController::class,'store']);
-    Route::put('/posts/{post}',[PostController::class,'update']);
-    Route::delete('/posts/{post}',[PostController::class,'destroy']);
+    Route::put('/posts/{Id}',[PostController::class,'update']);
+    Route::delete('/posts/{Id}',[PostController::class,'destroy']);
 
     Route::post('/comments',[CommentController::class,'store']);
     Route::delete('/comments/{comment}',[CommentController::class,'destroy']);

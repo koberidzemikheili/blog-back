@@ -32,15 +32,17 @@ class PostController extends Controller
         $post->increment('views');
         return new PostResource($post);
     }
-    public function update(PostUpdateRequest $request, Post $post): JsonResponse
+    public function update(PostUpdateRequest $request, $Id): JsonResponse
     {
+        $post = Post::findOrfail($Id);
         $this->authorize('update', $post);
         $validatedData = $request->validated();
         $post->update($validatedData);
         return response()->json(['message'=>'post updated successfully']);
     }
-    public function destroy(Post $post): JsonResponse
+    public function destroy($Id): JsonResponse
     {
+        $post = Post::findOrfail($Id);
         $this->authorize('delete', $post);
         $post->delete();
         return response()->json(['message'=>'post deleted successfully']);
