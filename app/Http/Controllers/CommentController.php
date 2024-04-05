@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ComentRequests\CommentStoreRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,8 @@ class CommentController extends Controller
         $validatedData = $request->validated();
         $userId = auth()->user()->id;
         $validatedData['user_id'] = $userId;
-        Comment::create($validatedData);
-        return response()->json(['message' => 'Comment created successfully']);
+        $comment = Comment::create($validatedData);
+        return response()->json(['message' => 'Comment created successfully','comment' => new CommentResource($comment)], 201);
     }
 
 

@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('publish_date', 'desc')->paginate(10);
         return PostResource::collection($posts);
     }
     public function store(PostStoreRequest $request): JsonResponse
@@ -24,8 +24,8 @@ class PostController extends Controller
         $this->authorize('create', Post::class);
         $validatedData = $request->validated();
         $validatedData['publish_date'] = Carbon::now()->toDateString();
-        auth()->user()->posts()->create($validatedData);
-        return response()->json(['message'=>'post created successfully']);
+        $post = auth()->user()->posts()->create($validatedData);
+        return response()->json(['message'=>'post created successfully','post'=> new PostResource($post)], 201);
     }
     public function show(Post $post): PostResource
     {

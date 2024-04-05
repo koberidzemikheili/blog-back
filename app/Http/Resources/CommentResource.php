@@ -19,6 +19,8 @@ class CommentResource extends JsonResource
                 'id' => $this->id,
                 'body' => $this->body,
                 'full_name' => $this->user->first_name . ' ' . $this->user->last_name,
+                'user_id' => $this->user_id,
+                'created_at' => $this->created_at->diffForHumans(),
             ];
     }
 }

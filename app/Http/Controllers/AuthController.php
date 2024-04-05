@@ -18,7 +18,7 @@ class AuthController extends Controller
         $remember = $validatedData['remember'];
         unset($validatedData['remember']);
         if(!auth()->attempt($validatedData,$remember)) {
-            return response()->json(['message'=>'could not login user']);
+            return response()->json(['message'=>'could not login user'],401);
         }
         else
         {
@@ -33,5 +33,13 @@ class AuthController extends Controller
         $user = User::create($validatedData);
         $user->assignRole('User');
         return response()->json(['message'=>'user created successfully']);
+    }
+
+    public function logout(): JsonResponse
+    {
+        auth()->user()->tokens()->each(function ($token, $key) {
+            $token->delete();
+        });
+        return response()->json(['message' => 'User logged out'], 200);
     }
 }
